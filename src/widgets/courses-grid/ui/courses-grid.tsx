@@ -5,6 +5,7 @@ import { useState, useMemo } from "react"
 import type { Course } from "@/shared/types"
 import { MotionCard, MotionBadge } from "@/shared/ui"
 import { STATUS_COLORS } from "@/shared/config"
+import { CourseDetailModal } from "@/features/course-detail-modal"
 import classes from "./courses-grid.module.css"
 
 interface CoursesGridProps {
@@ -21,6 +22,21 @@ export function CoursesGrid({
   allCourses = [],
 }: CoursesGridProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
+  const [modalOpened, setModalOpened] = useState(false)
+
+  const handleCourseClick = (course: Course) => {
+    // Only open modal for completed, ongoing, or recommended courses
+    if (course.status !== "locked") {
+      setSelectedCourse(course)
+      setModalOpened(true)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setModalOpened(false)
+    setSelectedCourse(null)
+  }
 
   const courseMap = useMemo(() => {
     const map = new Map<string, string>()
@@ -40,8 +56,9 @@ export function CoursesGrid({
   }
 
   return (
-    <Stack gap="md">
-      <Group justify="space-between">
+    <>
+      <Stack gap="md">
+        <Group justify="space-between">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
           <Text size="xl" fw={600}>
             {title}
@@ -81,9 +98,10 @@ export function CoursesGrid({
                 whileTap={{ scale: 0.98 }}
                 onHoverStart={() => setHoveredId(course.id)}
                 onHoverEnd={() => setHoveredId(null)}
+                onClick={() => handleCourseClick(course)}
                 style={{
                   height: "100%",
-                  cursor: "pointer",
+                  cursor: course.status === "locked" ? "not-allowed" : "pointer",
                   perspective: "1000px",
                 }}
               >
@@ -292,5 +310,8 @@ export function CoursesGrid({
         </AnimatePresence>
       </Grid>
     </Stack>
+
+    <CourseDetailModal course={selectedCourse} opened={modalOpened} onClose={handleCloseModal} />
+    </>
   )
 }

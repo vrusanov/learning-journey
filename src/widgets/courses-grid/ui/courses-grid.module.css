@@ -1,0 +1,44 @@
+.card {
+  height: 100%;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.targetIcon {
+  color: gray;
+}
+
+.clockIcon {
+  color: gray;
+}
+
+.sparklesIcon {
+  color: #ffd700;
+}
+
+.lockOpenIcon {
+  color: #4ade80;
+}
+
+.lockSmallIcon {
+  color: gray;
+}
+
+.starIcon {
+  color: #ffd700;
+}
+
+.sparklesSmallIcon {
+  color: #a78bfa;
+}
+
+.lockIcon {
+  color: #fa5252;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 48em) {
+  .card {
+    padding: 0.75rem;
+  }
+}

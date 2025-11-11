@@ -1,0 +1,99 @@
+.streakCard {
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 148, 77, 0.05) 100%);
+  border-color: rgba(255, 107, 0, 0.3);
+  cursor: pointer;
+}
+
+.streakIcon {
+  color: #ff6b00;
+}
+
+.xpCard {
+  background: linear-gradient(135deg, rgba(228, 184, 0, 0.1) 0%, rgba(255, 215, 77, 0.05) 100%);
+  border-color: rgba(228, 184, 0, 0.3);
+  cursor: pointer;
+}
+
+.xpIcon {
+  color: #e4b800;
+}
+
+.levelCard {
+  background: linear-gradient(135deg, rgba(114, 87, 255, 0.1) 0%, rgba(162, 140, 255, 0.05) 100%);
+  border-color: rgba(114, 87, 255, 0.3);
+  cursor: pointer;
+}
+
+.levelIcon {
+  color: #7257ff;
+}
+
+.progressBar {
+  width: 100%;
+}
+
+.achievementCard {
+  cursor: pointer;
+}
+
+.achievementCardUnlocked {
+  opacity: 1;
+  background: linear-gradient(135deg, rgba(114, 87, 255, 0.1) 0%, rgba(162, 140, 255, 0.05) 100%);
+}
+
+.achievementCardLocked {
+  opacity: 0.6;
+  background: transparent;
+}
+
+.achievementIconContainer {
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.achievementIconUnlocked {
+  background: rgba(114, 87, 255, 0.2);
+  color: #7257ff;
+}
+
+.achievementIconLocked {
+  background: rgba(128, 128, 128, 0.1);
+  color: gray;
+}
+
+.achievementContent {
+  flex: 1;
+}
+
+.nextMilestoneCard {
+  background: linear-gradient(135deg, rgba(34, 193, 195, 0.1) 0%, rgba(34, 193, 195, 0.05) 100%);
+  cursor: pointer;
+}
+
+.nextMilestoneIconContainer {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(34, 193, 195, 0.2);
+  color: #22c1c3;
+}
+
+.nextMilestoneProgress {
+  color: #22c1c3;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 48em) {
+  .streakCard,
+  .xpCard,
+  .levelCard {
+    padding: 0.75rem;
+  }
+
+  .achievementIconContainer {
+    padding: 8px;
+  }
+
+  .nextMilestoneIconContainer {
+    padding: 8px;
+  }
+}

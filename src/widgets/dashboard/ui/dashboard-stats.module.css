@@ -1,0 +1,22 @@
+.card {
+  cursor: pointer;
+}
+
+.bookIcon {
+  color: #22c1c3;
+}
+
+.clockIcon {
+  color: #ff6b00;
+}
+
+.trendingIcon {
+  color: #7257ff;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 48em) {
+  .card {
+    padding: 0.75rem;
+  }
+}

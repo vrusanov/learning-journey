@@ -1,0 +1,51 @@
+.trophyIcon {
+  color: #ffd700;
+}
+
+.rankBadge {
+  min-width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  font-size: 1.5rem;
+}
+
+.statsContainer {
+  min-width: 120px;
+}
+
+.summaryCard {
+  background: rgba(109, 40, 217, 0.05);
+}
+
+.targetIcon {
+  color: #8b5cf6;
+}
+
+.starIcon {
+  color: #fbbf24;
+}
+
+.clockIcon {
+  color: #60a5fa;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 48em) {
+  .rankBadge {
+    min-width: 40px;
+    height: 40px;
+  }
+
+  .avatar {
+    font-size: 1.25rem;
+  }
+
+  .statsContainer {
+    min-width: 100px;
+  }
+}

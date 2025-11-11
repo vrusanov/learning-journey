@@ -20,10 +20,6 @@ export class ApiError extends Error {
   }
 }
 
-// ============================================================================
-// COURSES API
-// ============================================================================
-
 export interface FetchCoursesParams {
   status?: Course["status"]
   category?: string
@@ -35,11 +31,8 @@ export interface FetchCoursesResponse {
   total: number
 }
 
-/**
- * Fetch courses with optional filters
- */
 export const fetchCourses = async (params?: FetchCoursesParams): Promise<FetchCoursesResponse> => {
-  await delay(500) // Simulate network delay
+  await delay(500)
 
   if (shouldFail()) {
     throw new ApiError("Failed to fetch courses", 500)
@@ -68,9 +61,6 @@ export const fetchCourses = async (params?: FetchCoursesParams): Promise<FetchCo
   }
 }
 
-/**
- * Fetch single course by ID
- */
 export const fetchCourseById = async (id: string): Promise<Course> => {
   await delay(300)
 
@@ -87,9 +77,6 @@ export const fetchCourseById = async (id: string): Promise<Course> => {
   return course
 }
 
-/**
- * Update course status
- */
 export const updateCourseStatus = async (id: string, status: Course["status"]): Promise<Course> => {
   await delay(400)
 
@@ -107,10 +94,6 @@ export const updateCourseStatus = async (id: string, status: Course["status"]): 
   return course
 }
 
-// ============================================================================
-// USERS API
-// ============================================================================
-
 export interface FetchLeaderboardParams {
   limit?: number
   offset?: number
@@ -122,9 +105,6 @@ export interface FetchLeaderboardResponse {
   hasMore: boolean
 }
 
-/**
- * Fetch leaderboard with pagination
- */
 export const fetchLeaderboard = async (params?: FetchLeaderboardParams): Promise<FetchLeaderboardResponse> => {
   await delay(600)
 
@@ -146,9 +126,6 @@ export const fetchLeaderboard = async (params?: FetchLeaderboardParams): Promise
   }
 }
 
-/**
- * Fetch current user profile
- */
 export const fetchCurrentUser = async (): Promise<User> => {
   await delay(300)
 
@@ -156,13 +133,9 @@ export const fetchCurrentUser = async (): Promise<User> => {
     throw new ApiError("Failed to fetch user", 500)
   }
 
-  // Return first user as "current user"
   return mockUsers[0]
 }
 
-/**
- * Update user profile
- */
 export const updateUserProfile = async (
   userId: string,
   updates: Partial<Pick<User, "name" | "avatar">>
@@ -183,10 +156,6 @@ export const updateUserProfile = async (
   return user
 }
 
-// ============================================================================
-// STATS API
-// ============================================================================
-
 export interface DashboardStats {
   totalCourses: number
   completedCourses: number
@@ -198,9 +167,6 @@ export interface DashboardStats {
   achievements: number
 }
 
-/**
- * Fetch dashboard statistics
- */
 export const fetchDashboardStats = async (): Promise<DashboardStats> => {
   await delay(400)
 
@@ -218,7 +184,7 @@ export const fetchDashboardStats = async (): Promise<DashboardStats> => {
     totalXP: currentUser.stats.xp,
     currentLevel: currentUser.stats.level,
     currentStreak: currentUser.stats.streak,
-    achievements: 0, // TODO: Add achievements to User type
+    achievements: 0,
   }
 
   return stats

@@ -15,7 +15,7 @@ import {
 import { MotionCard, MotionBox, MotionBadge } from "@/shared/ui"
 import { ACHIEVEMENT_RARITIES } from "@/shared/config"
 import { AchievementPopup } from "@/features/achievement-popup"
-import classes from "./gamification-widget.module.css"
+import classes from "./gamification-widget.module.scss"
 
 const ACHIEVEMENTS = [
   {
@@ -82,7 +82,6 @@ export function GamificationWidget() {
   }
 
   useEffect(() => {
-    // Animate counters
     const animateCounter = (element: HTMLElement | null, target: number, suffix = "") => {
       if (!element) return
       let current = 0
@@ -105,7 +104,6 @@ export function GamificationWidget() {
 
   return (
     <Stack gap="md">
-      {/* Stats Row */}
       <Grid gutter="md">
         <Grid.Col span={{ base: 12, sm: 4 }}>
           <MotionCard
@@ -231,7 +229,6 @@ export function GamificationWidget() {
         </Grid.Col>
       </Grid>
 
-      {/* Achievements */}
       <MotionCard
         shadow="md"
         padding="lg"
@@ -363,7 +360,6 @@ export function GamificationWidget() {
         </Stack>
       </MotionCard>
 
-      {/* Daily Goal */}
       <MotionCard
         shadow="md"
         padding="lg"
@@ -418,7 +414,6 @@ export function GamificationWidget() {
         </motion.div>
       </MotionCard>
 
-      {/* Lesson Reminders Toggle */}
       <MotionCard
         shadow="md"
         padding="lg"
@@ -465,7 +460,6 @@ export function GamificationWidget() {
         </Group>
       </MotionCard>
 
-      {/* Achievement Popup */}
       <AchievementPopup achievement={selectedAchievement} opened={popupOpened} onClose={() => setPopupOpened(false)} />
     </Stack>
   )

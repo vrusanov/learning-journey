@@ -1,7 +1,7 @@
 import { TextInput, Group, Title, ActionIcon } from "@mantine/core"
 import { IconSearch, IconX } from "@tabler/icons-react"
 import { motion } from "framer-motion"
-import classes from "./header.module.css"
+import classes from "./header.module.scss"
 
 interface HeaderProps {
   searchQuery: string
@@ -34,12 +34,7 @@ export function Header({ searchQuery, onSearchChange }: HeaderProps) {
           leftSection={<IconSearch size={16} />}
           rightSection={
             searchQuery ? (
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                onClick={() => onSearchChange("")}
-                aria-label="Clear search"
-              >
+              <ActionIcon variant="subtle" color="gray" onClick={() => onSearchChange("")} aria-label="Clear search">
                 <IconX size={16} />
               </ActionIcon>
             ) : null
@@ -57,4 +52,3 @@ export function Header({ searchQuery, onSearchChange }: HeaderProps) {
     </motion.header>
   )
 }
-

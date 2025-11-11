@@ -12,7 +12,7 @@ import {
   type StackProps,
 } from "@mantine/core"
 import { forwardRef, type ReactNode } from "react"
-import classes from "./motion-components.module.css"
+import classes from "./motion-components.module.scss"
 
 type MotionCardProps = CardProps &
   Omit<HTMLMotionProps<"div">, keyof CardProps> & {

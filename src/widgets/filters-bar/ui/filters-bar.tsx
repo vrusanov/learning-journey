@@ -4,7 +4,7 @@ import { DatePickerInput } from "@mantine/dates"
 import { motion } from "framer-motion"
 import { MotionPaper } from "@/shared/ui"
 import { CATEGORIES, COURSE_STATUSES } from "@/shared/config"
-import classes from "./filters-bar.module.css"
+import classes from "./filters-bar.module.scss"
 
 interface FiltersBarProps {
   selectedCategories: string[]

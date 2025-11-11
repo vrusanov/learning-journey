@@ -9,6 +9,7 @@ import {
   IconCalendar,
 } from "@tabler/icons-react"
 import { motion } from "framer-motion"
+import { useState } from "react"
 import type { Course, CourseStatus } from "@/shared/types"
 import { MotionCard } from "@/shared/ui"
 
@@ -26,36 +27,28 @@ const statusColors: Record<CourseStatus, string> = {
 }
 
 export function CourseDetailModal({ course, opened, onClose }: CourseDetailModalProps) {
+  const [now] = useState(() => Date.now())
+
   if (!course) return null
 
   const totalMinutes = course.sessions.reduce((sum, s) => sum + s.minutes, 0)
   const totalHours = Math.floor(totalMinutes / 60)
   const remainingMinutes = totalMinutes % 60
 
-  // Calculate roadmap item completion based on course dates and progress
   const getRoadmapItemStatus = (itemIndex: number, totalItems: number) => {
-    const now = Date.now()
-
-    // If course hasn't started yet (recommended or no start date)
     if (!course.startDate || course.status === "recommended") {
       return false
     }
 
-    // If course is completed (all items should be completed)
     if (course.status === "completed" || (course.endDate && now > course.endDate)) {
       return true
     }
 
-    // If course is ongoing, calculate based on progress
     if (course.status === "ongoing" && course.startDate && course.endDate) {
       const courseDuration = course.endDate - course.startDate
       const timeElapsed = now - course.startDate
       const progressByTime = Math.min((timeElapsed / courseDuration) * 100, 100)
-
-      // Use the higher of actual progress or time-based progress
       const effectiveProgress = Math.max(course.totalProgress, progressByTime)
-
-      // Calculate which items should be completed based on progress
       const itemProgressThreshold = ((itemIndex + 1) / totalItems) * 100
       return effectiveProgress >= itemProgressThreshold
     }
@@ -106,7 +99,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
       centered
     >
       <Stack gap="xl">
-        {/* Course Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <Text size="xl" fw={700} mb="sm">
             {course.title}
@@ -254,7 +246,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
           </MotionCard>
         )}
 
-        {/* Recent Sessions Timeline */}
         {course.sessions.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -293,7 +284,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
           </motion.div>
         )}
 
-        {/* Course Roadmap */}
         {course.roadmap && course.roadmap.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}

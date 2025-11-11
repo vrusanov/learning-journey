@@ -1,0 +1,57 @@
+@use '../../../shared/styles/variables' as *;
+
+.trophyIcon {
+  color: #ffd700;
+}
+
+.rankBadge {
+  min-width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-xl;
+
+  @media (max-width: $breakpoint-md) {
+    min-width: 40px;
+    height: 40px;
+  }
+}
+
+.currentUserCard {
+  cursor: pointer;
+  background: $gradient-header;
+  border: 2px solid rgba(109, 40, 217, 0.5);
+}
+
+.avatar {
+  font-size: $font-size-2xl;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-xl;
+  }
+}
+
+.statsContainer {
+  min-width: 120px;
+
+  @media (max-width: $breakpoint-md) {
+    min-width: 100px;
+  }
+}
+
+.summaryCard {
+  background: $color-purple-light;
+}
+
+.targetIcon {
+  color: #8b5cf6;
+}
+
+.starIcon {
+  color: #fbbf24;
+}
+
+.clockIcon {
+  color: $color-info;
+}

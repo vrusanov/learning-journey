@@ -1,4 +1,4 @@
-import type { Course } from "../../types/course"
+import type { Course } from "@/shared"
 
 export interface UserStats {
   progress: number

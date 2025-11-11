@@ -13,7 +13,7 @@ export const useCurrentUser = () => {
   return useQuery({
     queryKey: userKeys.current(),
     queryFn: fetchCurrentUser,
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 10 * 60 * 1000,
   })
 }
 
@@ -21,7 +21,7 @@ export const useLeaderboard = (params?: FetchLeaderboardParams) => {
   return useQuery({
     queryKey: userKeys.leaderboardList(params),
     queryFn: () => fetchLeaderboard(params),
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 2 * 60 * 1000,
   })
 }
 

@@ -1,3 +1,5 @@
+@use '../../../shared/styles/variables' as *;
+
 .header {
   position: sticky;
   top: 0;
@@ -5,15 +7,15 @@
   backdrop-filter: blur(12px);
   background-color: rgba(26, 27, 30, 0.8);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 2rem;
+  margin-bottom: $spacing-xl;
   padding: var(--mantine-spacing-md) var(--mantine-spacing-xl);
 }
 
 .searchInput {
-  transition: all 0.3s ease;
-}
+  transition: all $transition-normal;
 
-.searchInput:focus-within {
-  transform: scale(1.02);
+  &:focus-within {
+    transform: scale(1.02);
+  }
 }
 

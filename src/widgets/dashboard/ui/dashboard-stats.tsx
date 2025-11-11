@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { MotionCard } from "@/shared/ui"
 import { useCounterAnimation } from "@/shared/lib"
 import type { UserStats } from "@/shared/lib/utils/stats-calculator"
-import classes from "./dashboard-stats.module.css"
+import classes from "./dashboard-stats.module.scss"
 
 interface DashboardStatsProps {
   stats: UserStats

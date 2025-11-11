@@ -1,5 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { fetchCourses, fetchCourseById, updateCourseStatus, FetchCoursesParams } from "../mock-api"
+import {
+  fetchCourses,
+  fetchCourseById,
+  updateCourseStatus,
+  FetchCoursesParams,
+  FetchCoursesResponse,
+} from "../mock-api"
 import { Course } from "../../types/course"
 
 export const courseKeys = {
@@ -19,9 +25,6 @@ export const useCourses = (params?: FetchCoursesParams) => {
   })
 }
 
-/**
- * Hook to fetch single course by ID
- */
 export const useCourse = (id: string) => {
   return useQuery({
     queryKey: courseKeys.detail(id),
@@ -31,9 +34,6 @@ export const useCourse = (id: string) => {
   })
 }
 
-/**
- * Hook to update course status
- */
 export const useUpdateCourseStatus = () => {
   const queryClient = useQueryClient()
 
@@ -42,8 +42,10 @@ export const useUpdateCourseStatus = () => {
 
     onMutate: async ({ id, status }) => {
       await queryClient.cancelQueries({ queryKey: courseKeys.lists() })
+
       const previousCourses = queryClient.getQueriesData({ queryKey: courseKeys.lists() })
-      queryClient.setQueriesData({ queryKey: courseKeys.lists() }, (old: any) => {
+
+      queryClient.setQueriesData({ queryKey: courseKeys.lists() }, (old: FetchCoursesResponse | undefined) => {
         if (!old?.courses) return old
 
         return {
@@ -51,6 +53,7 @@ export const useUpdateCourseStatus = () => {
           courses: old.courses.map((course: Course) => (course.id === id ? { ...course, status } : course)),
         }
       })
+
       queryClient.setQueryData(courseKeys.detail(id), (old: Course | undefined) => {
         if (!old) return old
         return { ...old, status }

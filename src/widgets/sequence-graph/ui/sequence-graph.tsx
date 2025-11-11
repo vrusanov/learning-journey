@@ -5,7 +5,7 @@ import { useMemo, useState } from "react"
 import type { Course } from "@/shared/types"
 import { MotionPaper } from "@/shared/ui"
 import { CourseDetailModal } from "@/features/course-detail-modal"
-import classes from "./sequence-graph.module.css"
+import classes from "./sequence-graph.module.scss"
 
 interface SequenceGraphProps {
   courses: Course[]
@@ -31,7 +31,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
     const visited = new Set<string>()
     const result: Course[][] = []
 
-      const startCourses = completed.filter((c) => c.prereqIds.length === 0)
+    const startCourses = completed.filter((c) => c.prereqIds.length === 0)
     if (startCourses.length > 0) {
       result.push(startCourses)
       startCourses.forEach((c) => visited.add(c.id))
@@ -92,11 +92,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
     <MotionPaper
       p="xl"
       radius="lg"
-      style={{
-        background: "linear-gradient(135deg, rgba(76, 29, 149, 0.15) 0%, rgba(17, 24, 39, 0.3) 100%)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-      }}
+      className={classes.container}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
@@ -149,17 +145,15 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                   transition={{ duration: 0.4, delay: layerIndex * 0.1 }}
                 >
                   <Box
-                    p="lg"
+                    className={classes.layerBox}
                     style={{
                       border: getStatusBorder(layer[0].status),
-                      borderRadius: "16px",
                       background:
                         layer[0].status === "ongoing"
                           ? "rgba(250, 176, 5, 0.05)"
                           : layer[0].status === "recommended"
                             ? "rgba(134, 142, 150, 0.05)"
                             : "rgba(34, 184, 207, 0.05)",
-                      minWidth: "200px",
                     }}
                   >
                     <Group gap="md" mb="sm">
@@ -174,33 +168,22 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                             p="md"
                             radius="md"
                             onClick={() => handleCourseClick(course)}
+                            className={`${classes.courseCard} ${
+                              course.status === "completed"
+                                ? classes.courseCardCompleted
+                                : course.status === "ongoing"
+                                  ? classes.courseCardOngoing
+                                  : course.status === "locked"
+                                    ? classes.courseCardLocked
+                                    : classes.courseCardRecommended
+                            } ${course.status !== "locked" ? classes.courseCardClickable : ""}`}
                             style={{
-                              cursor: course.status === "locked" ? "not-allowed" : "pointer",
                               border: getStatusBorder(course.status),
-                              background:
-                                course.status === "completed"
-                                  ? "rgba(34, 184, 207, 0.15)"
-                                  : course.status === "ongoing"
-                                    ? "rgba(250, 176, 5, 0.15)"
-                                    : course.status === "locked"
-                                      ? "rgba(250, 82, 82, 0.1)"
-                                      : "rgba(134, 142, 150, 0.1)",
-                              width: "160px",
-                              height: "160px",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              position: "relative",
                             }}
                           >
                             {course.status === "completed" && (
                               <motion.div
-                                style={{
-                                  position: "absolute",
-                                  top: "12px",
-                                  right: "12px",
-                                }}
+                                className={classes.checkIcon}
                                 initial={{ scale: 0, rotate: -180 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 15, delay: 0.2 }}
@@ -210,12 +193,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                             )}
                             {course.status === "ongoing" && (
                               <motion.div
-                                style={{
-                                  position: "absolute",
-                                  top: "8px",
-                                  left: "8px",
-                                  right: "8px",
-                                }}
+                                className={classes.ongoingBar}
                                 animate={{
                                   boxShadow: ["0 0 0 0 rgba(250, 176, 5, 0.7)", "0 0 0 10px rgba(250, 176, 5, 0)"],
                                 }}
@@ -226,11 +204,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                             )}
                             {course.status === "locked" && (
                               <motion.div
-                                style={{
-                                  position: "absolute",
-                                  top: "12px",
-                                  right: "12px",
-                                }}
+                                className={classes.lockIcon}
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                                 transition={{ type: "spring", stiffness: 300, damping: 15, delay: 0.2 }}
@@ -259,12 +233,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
 
                 {layerIndex < layers.length - 1 && (
                   <motion.div
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      right: "-30px",
-                      transform: "translateY(-50%)",
-                    }}
+                    className={classes.arrowContainer}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: layerIndex * 0.1 + 0.2 }}
@@ -276,9 +245,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                       <IconArrowRight
                         size={32}
                         color={layers[layerIndex + 1][0].status === "recommended" ? "#868e96" : "#7c3aed"}
-                        style={{
-                          filter: "drop-shadow(0 0 8px rgba(124, 58, 237, 0.5))",
-                        }}
+                        className={classes.arrowIcon}
                       />
                     </motion.div>
                   </motion.div>
@@ -289,7 +256,6 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
         </Box>
       </ScrollArea>
 
-      {/* Course Detail Modal */}
       <CourseDetailModal course={selectedCourse} opened={modalOpened} onClose={() => setModalOpened(false)} />
     </MotionPaper>
   )

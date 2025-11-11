@@ -6,7 +6,7 @@ import type { Course } from "@/shared/types"
 import { MotionCard, MotionBadge } from "@/shared/ui"
 import { STATUS_COLORS } from "@/shared/config"
 import { CourseDetailModal } from "@/features/course-detail-modal"
-import classes from "./courses-grid.module.css"
+import classes from "./courses-grid.module.scss"
 
 interface CoursesGridProps {
   courses: Course[]
@@ -26,7 +26,6 @@ export function CoursesGrid({
   const [modalOpened, setModalOpened] = useState(false)
 
   const handleCourseClick = (course: Course) => {
-    // Only open modal for completed, ongoing, or recommended courses
     if (course.status !== "locked") {
       setSelectedCourse(course)
       setModalOpened(true)
@@ -99,11 +98,7 @@ export function CoursesGrid({
                   onHoverStart={() => setHoveredId(course.id)}
                   onHoverEnd={() => setHoveredId(null)}
                   onClick={() => handleCourseClick(course)}
-                  style={{
-                    height: "100%",
-                    cursor: course.status === "locked" ? "not-allowed" : "pointer",
-                    perspective: "1000px",
-                  }}
+                  className={`${classes.card} ${course.status === "locked" ? classes.cardLocked : ""}`}
                 >
                   <Stack gap="md">
                     <Group justify="space-between">

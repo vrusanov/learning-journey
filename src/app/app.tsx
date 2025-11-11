@@ -13,7 +13,7 @@ import { MOCK_USERS } from "@/entities/user"
 import { useState, useMemo } from "react"
 import { calculateUserStats } from "@/shared/lib"
 import { MotionStack } from "@/shared/ui"
-import classes from "./app.module.css"
+import classes from "./app.module.scss"
 
 const theme = createTheme({
   primaryColor: "violet",

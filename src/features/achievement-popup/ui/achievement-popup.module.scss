@@ -1,0 +1,15 @@
+@use '../../../shared/styles/variables' as *;
+
+.icon {
+  color: $color-white;
+}
+
+.rarityBadge {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.confetti {
+  pointer-events: none;
+}
+

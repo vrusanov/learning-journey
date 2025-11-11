@@ -1,0 +1,46 @@
+@use '../shared/styles/variables' as *;
+
+.container {
+  padding: $spacing-md;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $spacing-lg;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    padding: $spacing-xl;
+  }
+}
+
+.mainStack {
+  gap: $spacing-md;
+
+  @media (min-width: $breakpoint-md) {
+    gap: $spacing-lg;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    gap: $spacing-xl;
+  }
+}
+
+.title {
+  font-size: $font-size-3xl;
+  line-height: 1.2;
+
+  @media (min-width: $breakpoint-md) {
+    font-size: $font-size-4xl;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    font-size: $font-size-5xl;
+  }
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+
+  @media (min-width: $breakpoint-md) {
+    font-size: $font-size-md;
+  }
+}

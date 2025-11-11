@@ -1,0 +1,20 @@
+@use '../../../shared/styles/variables' as *;
+
+.container {
+  background: $gradient-header;
+  backdrop-filter: blur(10px);
+  border: 1px solid $color-white-08;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-sm;
+  }
+}
+
+.progressBarContainer {
+  transform-origin: left;
+}
+
+.progressBar {
+  background: $gradient-progress;
+  border-radius: 2px;
+}

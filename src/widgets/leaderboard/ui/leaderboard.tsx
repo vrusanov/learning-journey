@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import type { User } from "@/shared/types"
 import { MotionCard } from "@/shared/ui"
-import classes from "./leaderboard.module.css"
+import classes from "./leaderboard.module.scss"
 
 interface LeaderboardProps {
   users: User[]
@@ -107,51 +107,30 @@ export function Leaderboard({ users }: LeaderboardProps) {
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 whileHover={{ scale: 1.02, y: -2 }}
-                style={{
-                  cursor: "pointer",
-                  background: isCurrentUser
-                    ? "linear-gradient(135deg, rgba(109, 40, 217, 0.15) 0%, rgba(17, 24, 39, 0.3) 100%)"
-                    : undefined,
-                  border: isCurrentUser ? "2px solid rgba(109, 40, 217, 0.5)" : undefined,
-                }}
+                className={isCurrentUser ? classes.currentUserCard : ""}
               >
                 <Group justify="space-between" wrap="nowrap">
                   <Group gap="md" wrap="nowrap">
-                    {/* Rank Badge */}
                     <motion.div
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ type: "spring", stiffness: 260, damping: 20, delay: index * 0.05 }}
                     >
-                      <Badge
-                        size="xl"
-                        variant="filled"
-                        color={getRankColor(rank)}
-                        style={{
-                          minWidth: "50px",
-                          height: "50px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "1.2rem",
-                        }}
-                      >
+                      <Badge size="xl" variant="filled" color={getRankColor(rank)} className={classes.rankBadge}>
                         {getRankIcon(rank)}
                       </Badge>
                     </motion.div>
 
-                    {/* Avatar */}
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 260, damping: 20, delay: index * 0.05 + 0.1 }}
                     >
-                      <Avatar size="lg" radius="xl" style={{ fontSize: "1.5rem" }}>
+                      <Avatar size="lg" radius="xl" className={classes.avatar}>
                         {user.avatar}
                       </Avatar>
                     </motion.div>
 
-                    {/* User Info */}
                     <Stack gap={4}>
                       <Group gap="xs">
                         <Text fw={600} size="lg">
@@ -174,8 +153,7 @@ export function Leaderboard({ users }: LeaderboardProps) {
                     </Stack>
                   </Group>
 
-                  {/* Stats */}
-                  <Stack gap={4} align="flex-end" style={{ minWidth: "120px" }}>
+                  <Stack gap={4} align="flex-end" className={classes.statsContainer}>
                     <motion.div
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -199,7 +177,6 @@ export function Leaderboard({ users }: LeaderboardProps) {
                   </Stack>
                 </Group>
 
-                {/* Progress Bar for Current User */}
                 {isCurrentUser && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -225,9 +202,8 @@ export function Leaderboard({ users }: LeaderboardProps) {
         </AnimatePresence>
       </Stack>
 
-      {/* Summary Stats */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-        <Card padding="md" radius="lg" withBorder style={{ background: "rgba(109, 40, 217, 0.05)" }}>
+        <Card padding="md" radius="lg" withBorder className={classes.summaryCard}>
           <Group justify="space-around">
             <Stack gap={4} align="center">
               <IconTarget size={20} className={classes.targetIcon} />

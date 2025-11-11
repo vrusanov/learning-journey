@@ -1,0 +1,154 @@
+@use '../../../shared/styles/variables' as *;
+
+.container {
+  background: $gradient-header;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-sm;
+  }
+}
+
+.legendCompleted {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #22b8cf;
+  background: rgba(34, 184, 207, 0.2);
+
+  @media (max-width: $breakpoint-md) {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.legendOngoing {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px dashed $color-warning;
+  background: $color-warning-light;
+
+  @media (max-width: $breakpoint-md) {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.legendRecommended {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px dashed #868e96;
+  background: rgba(134, 142, 150, 0.2);
+
+  @media (max-width: $breakpoint-md) {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.legendLocked {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid $color-danger;
+  background: rgba(250, 82, 82, 0.2);
+
+  @media (max-width: $breakpoint-md) {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.scrollContent {
+  min-width: 800px;
+
+  @media (max-width: $breakpoint-md) {
+    min-width: 600px;
+  }
+}
+
+.layerContainer {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.layerBox {
+  border-radius: $radius-lg;
+  min-width: 200px;
+  padding: $spacing-md;
+}
+
+.courseCard {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.courseCardCompleted {
+  background: rgba(34, 184, 207, 0.15);
+}
+
+.courseCardOngoing {
+  background: rgba(250, 176, 5, 0.15);
+}
+
+.courseCardRecommended {
+  background: rgba(134, 142, 150, 0.1);
+}
+
+.courseCardLocked {
+  background: rgba(250, 82, 82, 0.1);
+  cursor: not-allowed;
+}
+
+.courseCardClickable {
+  cursor: pointer;
+}
+
+.arrowIcon {
+  filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.5));
+}
+
+.ongoingIndicator {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(250, 176, 5, 0.6);
+}
+
+.badgeCapitalize {
+  text-transform: capitalize;
+}
+
+.arrowContainer {
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+}
+
+.checkIcon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.ongoingBar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+}
+
+.lockIcon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}

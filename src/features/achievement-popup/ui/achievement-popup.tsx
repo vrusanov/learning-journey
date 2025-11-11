@@ -1,7 +1,9 @@
 import { Modal, Stack, Text, Badge, Button } from "@mantine/core"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { IconTrophy, IconFlame, IconTarget, IconBolt } from "@tabler/icons-react"
 import type { Icon } from "@tabler/icons-react"
+import { useMemo } from "react"
+import classes from "./achievement-popup.module.scss"
 
 interface Achievement {
   id: string
@@ -45,6 +47,20 @@ const rarityGradients: Record<Achievement["rarity"], string> = {
 }
 
 export function AchievementPopup({ achievement, opened, onClose }: AchievementPopupProps) {
+  const shouldReduceMotion = useReducedMotion()
+
+  // Зменшуємо кількість confetti для кращої продуктивності
+  const confettiCount = shouldReduceMotion ? 0 : 12
+  const confettiElements = useMemo(
+    () =>
+      Array.from({ length: confettiCount }).map((_, i) => ({
+        id: i,
+        angle: (i / confettiCount) * Math.PI * 2,
+        color: ["#fbbf24", "#f59e0b", "#a855f7", "#3b82f6"][i % 4],
+      })),
+    [confettiCount]
+  )
+
   if (!achievement) return null
 
   const IconComponent = iconMap[achievement.icon] || IconTrophy
@@ -65,71 +81,101 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
         },
       }}
     >
-      <Stack align="center" gap="lg">
+      <Stack align="center" gap="lg" style={{ position: "relative" }}>
         <motion.div
-          initial={{ scale: 0, rotate: -180 }}
+          initial={shouldReduceMotion ? { scale: 1 } : { scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          style={{ willChange: "transform" }}
         >
           <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-            }}
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    scale: [1, 1.05, 1],
+                  }
+            }
             transition={{
               duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
+              repeat: 3, // Обмежуємо до 3 повторів замість нескінченності
               ease: "easeInOut",
             }}
+            style={{ willChange: "transform" }}
           >
-            <IconComponent size={80} stroke={1.5} style={{ color: "white" }} />
+            <IconComponent size={80} stroke={1.5} className={classes.icon} />
           </motion.div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
           <Badge
             size="lg"
             variant="gradient"
             gradient={{ from: "white", to: "gray.2", deg: 135 }}
-            style={{ color: rarityColor, fontWeight: 700, textTransform: "uppercase" }}
+            style={{ color: rarityColor }}
+            className={classes.rarityBadge}
           >
             {achievement.rarity}
           </Badge>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
           <Text size="xl" fw={700} c="white" ta="center">
             {achievement.title}
           </Text>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           <Text size="sm" c="white" ta="center" opacity={0.9}>
             {achievement.description}
           </Text>
         </motion.div>
-        {Array.from({ length: 20 }).map((_, i) => (
+        {confettiElements.map((confetti) => (
           <motion.div
-            key={i}
-            initial={{
+            key={confetti.id}
+            style={{
               position: "absolute",
               top: "50%",
               left: "50%",
               width: 8,
               height: 8,
               borderRadius: "50%",
-              backgroundColor: ["#fbbf24", "#f59e0b", "#a855f7", "#3b82f6"][i % 4],
+              backgroundColor: confetti.color,
+              willChange: "transform, opacity",
+            }}
+            initial={{
+              x: 0,
+              y: 0,
+              opacity: 1,
+              scale: 1,
             }}
             animate={{
-              x: Math.cos((i / 20) * Math.PI * 2) * 150,
-              y: Math.sin((i / 20) * Math.PI * 2) * 150,
+              x: Math.cos(confetti.angle) * 150,
+              y: Math.sin(confetti.angle) * 150,
               opacity: 0,
               scale: 0,
             }}
             transition={{
-              duration: 1.5,
+              duration: 1.2,
               ease: "easeOut",
             }}
-            style={{ pointerEvents: "none" }}
+            className={classes.confetti}
           />
         ))}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
           <Button variant="white" color="dark" onClick={onClose} size="md" fullWidth>
             Awesome!
           </Button>

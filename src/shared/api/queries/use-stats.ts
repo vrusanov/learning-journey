@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
 import { fetchDashboardStats } from "../mock-api"
-
 export const statsKeys = {
   all: ["stats"] as const,
   dashboard: () => [...statsKeys.all, "dashboard"] as const,

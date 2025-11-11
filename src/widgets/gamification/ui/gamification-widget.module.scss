@@ -1,0 +1,106 @@
+@use '../../../shared/styles/variables' as *;
+
+.streakCard {
+  background: $gradient-streak;
+  border-color: $color-streak-border;
+  cursor: pointer;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-sm;
+  }
+}
+
+.streakIcon {
+  color: $color-streak;
+}
+
+.xpCard {
+  background: $gradient-xp;
+  border-color: $color-xp-border;
+  cursor: pointer;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-sm;
+  }
+}
+
+.xpIcon {
+  color: $color-xp;
+}
+
+.levelCard {
+  background: $gradient-primary;
+  border-color: $color-primary-border;
+  cursor: pointer;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-sm;
+  }
+}
+
+.levelIcon {
+  color: $color-primary;
+}
+
+.progressBar {
+  width: 100%;
+}
+
+.achievementCard {
+  cursor: pointer;
+}
+
+.achievementCardUnlocked {
+  opacity: 1;
+  background: $gradient-primary;
+  cursor: pointer;
+}
+
+.achievementCardLocked {
+  opacity: 0.6;
+  background: transparent;
+  cursor: pointer;
+}
+
+.achievementIconContainer {
+  padding: $radius-md;
+  border-radius: $radius-md;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 8px;
+  }
+}
+
+.achievementIconUnlocked {
+  background: $color-primary-bg;
+  color: $color-primary;
+}
+
+.achievementIconLocked {
+  background: $color-gray-light;
+  color: $color-gray;
+}
+
+.achievementContent {
+  flex: 1;
+}
+
+.nextMilestoneCard {
+  background: $gradient-success;
+  cursor: pointer;
+}
+
+.nextMilestoneIconContainer {
+  padding: $radius-md;
+  border-radius: $radius-md;
+  background: $color-success-bg;
+  color: $color-success;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 8px;
+  }
+}
+
+.nextMilestoneProgress {
+  color: $color-success;
+}

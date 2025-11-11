@@ -1,0 +1,92 @@
+// Colors
+$color-primary: #7257ff;
+$color-primary-light: rgba(114, 87, 255, 0.1);
+$color-primary-border: rgba(114, 87, 255, 0.3);
+$color-primary-bg: rgba(114, 87, 255, 0.2);
+
+$color-secondary: #ec4899;
+
+$color-success: #22c1c3;
+$color-success-light: rgba(34, 193, 195, 0.1);
+$color-success-bg: rgba(34, 193, 195, 0.2);
+
+$color-warning: #fab005;
+$color-warning-light: rgba(250, 176, 5, 0.05);
+
+$color-danger: #fa5252;
+
+$color-streak: #ff6b00;
+$color-streak-light: rgba(255, 107, 0, 0.1);
+$color-streak-border: rgba(255, 107, 0, 0.3);
+
+$color-xp: #e4b800;
+$color-xp-light: rgba(228, 184, 0, 0.1);
+$color-xp-border: rgba(228, 184, 0, 0.3);
+
+$color-info: #60a5fa;
+
+$color-gray: gray;
+$color-gray-light: rgba(128, 128, 128, 0.1);
+
+$color-white: white;
+$color-white-08: rgba(255, 255, 255, 0.08);
+
+$color-dark: #111827;
+$color-dark-light: rgba(17, 24, 39, 0.2);
+
+$color-purple-dark: #4c1d95;
+$color-purple-light: rgba(76, 29, 149, 0.1);
+
+// Gradients
+$gradient-primary: linear-gradient(135deg, $color-primary-light 0%, rgba(162, 140, 255, 0.05) 100%);
+$gradient-streak: linear-gradient(135deg, $color-streak-light 0%, rgba(255, 148, 77, 0.05) 100%);
+$gradient-xp: linear-gradient(135deg, $color-xp-light 0%, rgba(255, 215, 77, 0.05) 100%);
+$gradient-success: linear-gradient(135deg, $color-success-light 0%, rgba(34, 193, 195, 0.05) 100%);
+$gradient-header: linear-gradient(135deg, $color-purple-light 0%, $color-dark-light 100%);
+$gradient-progress: linear-gradient(90deg, #7c3aed 0%, #ec4899 100%);
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 0.75rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Border Radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-xl: 20px;
+
+// Font Sizes
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.75rem;
+$font-size-4xl: 2.25rem;
+$font-size-5xl: 2.5rem;
+
+// Breakpoints
+$breakpoint-sm: 36em;
+$breakpoint-md: 48em;
+$breakpoint-lg: 62em;
+$breakpoint-xl: 75em;
+
+// Transitions
+$transition-fast: 0.15s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-modal: 1050;
+$z-index-tooltip: 1100;
+

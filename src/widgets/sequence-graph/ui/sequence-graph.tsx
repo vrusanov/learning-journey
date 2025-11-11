@@ -1,9 +1,10 @@
 import { Text, Badge, Group, Box, ScrollArea, Paper } from "@mantine/core"
 import { motion } from "framer-motion"
 import { IconArrowRight, IconCheck, IconLock } from "@tabler/icons-react"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import type { Course } from "@/shared/types"
 import { MotionPaper } from "@/shared/ui"
+import { CourseDetailModal } from "@/features/course-detail-modal"
 import classes from "./sequence-graph.module.css"
 
 interface SequenceGraphProps {
@@ -11,6 +12,16 @@ interface SequenceGraphProps {
 }
 
 export function SequenceGraph({ courses }: SequenceGraphProps) {
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
+  const [modalOpened, setModalOpened] = useState(false)
+
+  const handleCourseClick = (course: Course) => {
+    if (course.status !== "locked") {
+      setSelectedCourse(course)
+      setModalOpened(true)
+    }
+  }
+
   const layers = useMemo(() => {
     const completed = courses.filter((c) => c.status === "completed")
     const ongoing = courses.filter((c) => c.status === "ongoing")
@@ -162,8 +173,9 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                           <Paper
                             p="md"
                             radius="md"
+                            onClick={() => handleCourseClick(course)}
                             style={{
-                              cursor: "pointer",
+                              cursor: course.status === "locked" ? "not-allowed" : "pointer",
                               border: getStatusBorder(course.status),
                               background:
                                 course.status === "completed"
@@ -276,6 +288,9 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
           </Group>
         </Box>
       </ScrollArea>
+
+      {/* Course Detail Modal */}
+      <CourseDetailModal course={selectedCourse} opened={modalOpened} onClose={() => setModalOpened(false)} />
     </MotionPaper>
   )
 }

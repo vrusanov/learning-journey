@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Group, Stack, Text, Progress, Badge, Grid, Indicator, Switch } from "@mantine/core"
+import { Group, Stack, Text, Progress, Badge, Grid, Indicator } from "@mantine/core"
 import { motion } from "framer-motion"
 import {
   IconFlame,
@@ -9,8 +9,6 @@ import {
   IconSparkles,
   IconMedal,
   IconBolt,
-  IconBell,
-  IconBellOff,
 } from "@tabler/icons-react"
 import { MotionCard, MotionBox, MotionBadge } from "@/shared/ui"
 import { ACHIEVEMENT_RARITIES } from "@/shared/config"
@@ -71,7 +69,6 @@ export function GamificationWidget() {
   const [selectedAchievement, setSelectedAchievement] = useState<(typeof ACHIEVEMENTS)[0] | null>(null)
   const [popupOpened, setPopupOpened] = useState(false)
   const [newBadgeVisible, setNewBadgeVisible] = useState(true)
-  const [reminderEnabled, setReminderEnabled] = useState(false)
 
   const handleAchievementClick = (achievement: (typeof ACHIEVEMENTS)[0]) => {
     setSelectedAchievement(achievement)
@@ -418,53 +415,6 @@ export function GamificationWidget() {
         >
           <Progress value={78} size="lg" radius="xl" color="cyan.6" mt="md" />
         </motion.div>
-      </MotionCard>
-
-      {/* Lesson Reminders Toggle */}
-      <MotionCard
-        shadow="md"
-        padding="lg"
-        radius="xl"
-        withBorder
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.9 }}
-        whileHover={{ scale: 1.02, y: -3 }}
-      >
-        <Group justify="space-between" align="center">
-          <Group gap="md">
-            <motion.div
-              animate={
-                reminderEnabled
-                  ? {
-                      scale: [1, 1.2, 1],
-                      rotate: [0, -15, 15, 0],
-                    }
-                  : {}
-              }
-              transition={{
-                duration: 0.5,
-              }}
-            >
-              {reminderEnabled ? <IconBell size={32} /> : <IconBellOff size={32} />}
-            </motion.div>
-            <Stack gap={4}>
-              <Text fw={600} size="lg">
-                Lesson Reminders
-              </Text>
-              <Text size="sm" c="dimmed">
-                {reminderEnabled ? "You'll receive daily reminders" : "Enable to get daily study reminders"}
-              </Text>
-            </Stack>
-          </Group>
-          <Switch
-            size="lg"
-            checked={reminderEnabled}
-            onChange={(event) => setReminderEnabled(event.currentTarget.checked)}
-            color="violet"
-            thumbIcon={reminderEnabled ? <IconBell size={12} /> : <IconBellOff size={12} />}
-          />
-        </Group>
       </MotionCard>
 
       {/* Achievement Popup */}

@@ -192,15 +192,9 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                               </motion.div>
                             )}
                             {course.status === "ongoing" && (
-                              <motion.div
-                                className={classes.ongoingBar}
-                                animate={{
-                                  boxShadow: ["0 0 0 0 rgba(250, 176, 5, 0.7)", "0 0 0 10px rgba(250, 176, 5, 0)"],
-                                }}
-                                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-                              >
+                              <div className={classes.ongoingBar}>
                                 <Box w="100%" h={3} className={classes.ongoingIndicator} />
-                              </motion.div>
+                              </div>
                             )}
                             {course.status === "locked" && (
                               <motion.div
@@ -238,16 +232,11 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: layerIndex * 0.1 + 0.2 }}
                   >
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                    >
-                      <IconArrowRight
-                        size={32}
-                        color={layers[layerIndex + 1][0].status === "recommended" ? "#868e96" : "#7c3aed"}
-                        className={classes.arrowIcon}
-                      />
-                    </motion.div>
+                    <IconArrowRight
+                      size={32}
+                      color={layers[layerIndex + 1][0].status === "recommended" ? "#868e96" : "#7c3aed"}
+                      className={classes.arrowIcon}
+                    />
                   </motion.div>
                 )}
               </Box>

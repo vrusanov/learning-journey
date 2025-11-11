@@ -91,12 +91,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         >
           <Stack gap="xs">
             <Group gap="xs">
-              <motion.div
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatDelay: 3 }}
-              >
-                <IconBook size={24} className={classes.bookIcon} />
-              </motion.div>
+              <IconBook size={24} className={classes.bookIcon} />
               <Text size="sm" c="dimmed">
                 Courses
               </Text>
@@ -165,12 +160,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         >
           <Stack gap="xs">
             <Group gap="xs">
-              <motion.div
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              >
-                <IconTrendingUp size={24} className={classes.trendingIcon} />
-              </motion.div>
+              <IconTrendingUp size={24} className={classes.trendingIcon} />
               <Text size="sm" c="dimmed">
                 Accuracy
               </Text>

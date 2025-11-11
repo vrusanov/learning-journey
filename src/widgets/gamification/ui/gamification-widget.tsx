@@ -153,17 +153,7 @@ export function GamificationWidget() {
             className={classes.xpCard}
           >
             <Stack align="center" gap="xs">
-              <MotionBox
-                whileHover={{
-                  rotate: 360,
-                  y: [-5, 5, -5],
-                }}
-                transition={{
-                  rotate: { duration: 0.6 },
-                  y: { duration: 0.3, repeat: Number.POSITIVE_INFINITY },
-                }}
-                className={classes.xpIcon}
-              >
+              <MotionBox whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className={classes.xpIcon}>
                 <IconTrophy size={40} />
               </MotionBox>
               <Text size="xl" fw={700} ref={xpRef}>
@@ -191,16 +181,8 @@ export function GamificationWidget() {
           >
             <Stack align="center" gap="xs">
               <MotionBox
-                whileHover={{ scale: 1.3 }}
-                animate={{
-                  rotate: [0, 180, 360],
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
+                whileHover={{ scale: 1.3, rotate: 360 }}
+                transition={{ duration: 0.6 }}
                 className={classes.levelIcon}
               >
                 <IconSparkles size={40} />
@@ -241,12 +223,7 @@ export function GamificationWidget() {
         <Stack gap="md">
           <Group justify="space-between">
             <Group gap="xs">
-              <motion.div
-                animate={{ rotate: [-15, 15, -15] }}
-                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              >
-                <IconMedal size={24} />
-              </motion.div>
+              <IconMedal size={24} />
               <Text size="lg" fw={600}>
                 Achievements
               </Text>
@@ -296,26 +273,13 @@ export function GamificationWidget() {
                     onClick={() => handleAchievementClick(achievement)}
                   >
                     <Group align="flex-start" gap="md">
-                      <motion.div
+                      <div
                         className={`${classes.achievementIconContainer} ${
                           achievement.unlocked ? classes.achievementIconUnlocked : classes.achievementIconLocked
                         }`}
-                        animate={
-                          achievement.unlocked
-                            ? {
-                                scale: [1, 1.1, 1],
-                                rotate: [0, 5, -5, 0],
-                              }
-                            : {}
-                        }
-                        transition={{
-                          duration: 2,
-                          repeat: achievement.unlocked ? Number.POSITIVE_INFINITY : 0,
-                          repeatDelay: 3,
-                        }}
                       >
                         {iconMap[achievement.icon]}
-                      </motion.div>
+                      </div>
                       <Stack gap="xs" className={classes.achievementContent}>
                         <Group justify="space-between">
                           <Text fw={600} size="sm">
@@ -374,19 +338,9 @@ export function GamificationWidget() {
       >
         <Group justify="space-between" align="center">
           <Group gap="md">
-            <motion.div
-              className={classes.nextMilestoneIconContainer}
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 360],
-              }}
-              transition={{
-                scale: { duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
-                rotate: { duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
-              }}
-            >
+            <div className={classes.nextMilestoneIconContainer}>
               <IconTarget size={32} />
-            </motion.div>
+            </div>
             <Stack gap={4}>
               <Text fw={600} size="lg">
                 Daily Goal
@@ -396,14 +350,9 @@ export function GamificationWidget() {
               </Text>
             </Stack>
           </Group>
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-          >
-            <Text size="xl" fw={700} className={classes.nextMilestoneProgress}>
-              78%
-            </Text>
-          </motion.div>
+          <Text size="xl" fw={700} className={classes.nextMilestoneProgress}>
+            78%
+          </Text>
         </Group>
         <motion.div
           initial={{ scaleX: 0, originX: 0 }}

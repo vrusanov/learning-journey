@@ -3,7 +3,6 @@
 .streakCard {
   background: $gradient-streak;
   border-color: $color-streak-border;
-  cursor: pointer;
 
   @media (max-width: $breakpoint-md) {
     padding: $spacing-sm;
@@ -17,7 +16,6 @@
 .xpCard {
   background: $gradient-xp;
   border-color: $color-xp-border;
-  cursor: pointer;
 
   @media (max-width: $breakpoint-md) {
     padding: $spacing-sm;
@@ -31,7 +29,6 @@
 .levelCard {
   background: $gradient-primary;
   border-color: $color-primary-border;
-  cursor: pointer;
 
   @media (max-width: $breakpoint-md) {
     padding: $spacing-sm;
@@ -87,7 +84,6 @@
 
 .nextMilestoneCard {
   background: $gradient-success;
-  cursor: pointer;
 }
 
 .nextMilestoneIconContainer {

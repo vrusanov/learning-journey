@@ -48,8 +48,6 @@ const rarityGradients: Record<Achievement["rarity"], string> = {
 
 export function AchievementPopup({ achievement, opened, onClose }: AchievementPopupProps) {
   const shouldReduceMotion = useReducedMotion()
-
-  // Зменшуємо кількість confetti для кращої продуктивності
   const confettiCount = shouldReduceMotion ? 0 : 12
   const confettiElements = useMemo(
     () =>
@@ -98,7 +96,7 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
             }
             transition={{
               duration: 2,
-              repeat: 3, // Обмежуємо до 3 повторів замість нескінченності
+              repeat: 3,
               ease: "easeInOut",
             }}
             style={{ willChange: "transform" }}

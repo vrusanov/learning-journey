@@ -1,8 +1,6 @@
 @use '../../../shared/styles/variables' as *;
 
 .card {
-  cursor: pointer;
-
   @media (max-width: $breakpoint-md) {
     padding: $spacing-sm;
   }

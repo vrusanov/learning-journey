@@ -5,10 +5,12 @@ import { useState, useEffect } from "react"
 import { MotionCard } from "@/shared/ui"
 import { useCounterAnimation } from "@/shared/lib"
 import type { UserStats } from "@/shared/lib/utils/stats-calculator"
+import type { DashboardStats as DashboardStatsType } from "@/shared/api/mock-api"
 import classes from "./dashboard-stats.module.scss"
 
 interface DashboardStatsProps {
   stats: UserStats
+  dashboardStats?: DashboardStatsType
 }
 
 export function DashboardStats({ stats }: DashboardStatsProps) {

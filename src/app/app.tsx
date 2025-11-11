@@ -1,4 +1,4 @@
-import { MantineProvider, createTheme, Container } from "@mantine/core"
+import { MantineProvider, createTheme, Container, LoadingOverlay, Alert } from "@mantine/core"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
 import { Header } from "@/widgets/header"
@@ -8,11 +8,13 @@ import { DashboardStats } from "@/widgets/dashboard"
 import { SequenceGraph } from "@/widgets/sequence-graph"
 import { FiltersBar } from "@/widgets/filters-bar"
 import { Leaderboard } from "@/widgets/leaderboard"
-import { MOCK_COURSES } from "@/entities/course"
-import { MOCK_USERS } from "@/entities/user"
+import { useCourses } from "@/shared/api/queries/use-courses"
+import { useLeaderboard } from "@/shared/api/queries/use-users"
+import { useDashboardStats } from "@/shared/api/queries/use-stats"
 import { useState, useMemo } from "react"
 import { calculateUserStats } from "@/shared/lib"
 import { MotionStack } from "@/shared/ui"
+import { IconAlertCircle } from "@tabler/icons-react"
 import classes from "./app.module.scss"
 
 const theme = createTheme({
@@ -27,11 +29,26 @@ export function App() {
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
 
+  const {
+    data: coursesData,
+    isLoading: coursesLoading,
+    error: coursesError,
+  } = useCourses({
+    search: searchQuery || undefined,
+  })
+
+  const {
+    data: leaderboardData,
+    isLoading: leaderboardLoading,
+    error: leaderboardError,
+  } = useLeaderboard({ limit: 10 })
+
+  const { data: dashboardStats, isLoading: statsLoading, error: statsError } = useDashboardStats()
+
+  const allCourses = useMemo(() => coursesData?.courses || [], [coursesData?.courses])
+
   const filteredCourses = useMemo(() => {
-    return MOCK_COURSES.filter((course) => {
-      if (searchQuery && !course.title.toLowerCase().includes(searchQuery.toLowerCase())) {
-        return false
-      }
+    return allCourses.filter((course) => {
       if (selectedCategories.length > 0 && !selectedCategories.includes(course.category)) {
         return false
       }
@@ -47,18 +64,29 @@ export function App() {
 
       return true
     })
-  }, [searchQuery, selectedCategories, selectedStatuses, dateRange])
+  }, [allCourses, selectedCategories, selectedStatuses, dateRange])
 
-  const stats = useMemo(() => calculateUserStats(MOCK_COURSES), [])
+  const stats = useMemo(() => calculateUserStats(allCourses), [allCourses])
 
   const ongoingCourses = filteredCourses.filter((c) => c.status === "ongoing")
   const recommendedCourses = filteredCourses
     .filter((c) => c.status === "recommended")
     .sort((a, b) => (b.recommendedScore || 0) - (a.recommendedScore || 0))
 
+  const isLoading = coursesLoading || leaderboardLoading || statsLoading
+  const hasError = coursesError || leaderboardError || statsError
+
   return (
     <MantineProvider theme={theme} defaultColorScheme="dark">
       <Container size="xl" className={classes.container}>
+        <LoadingOverlay visible={isLoading} overlayProps={{ blur: 2 }} />
+
+        {hasError && (
+          <Alert icon={<IconAlertCircle size={16} />} title="Error loading data" color="red" mb="md">
+            {coursesError?.message || leaderboardError?.message || statsError?.message || "Failed to load data"}
+          </Alert>
+        )}
+
         <MotionStack
           className={classes.mainStack}
           initial={{ opacity: 0, y: 30 }}
@@ -67,9 +95,9 @@ export function App() {
         >
           <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
-          <DashboardStats stats={stats} />
+          <DashboardStats stats={stats} dashboardStats={dashboardStats} />
           <GamificationWidget />
-          <Leaderboard users={MOCK_USERS} />
+          <Leaderboard users={leaderboardData?.users || []} />
           <FiltersBar
             selectedCategories={selectedCategories}
             onCategoriesChange={setSelectedCategories}
@@ -79,12 +107,12 @@ export function App() {
             onDateRangeChange={setDateRange}
           />
           <SequenceGraph courses={filteredCourses} />
-          <CoursesGrid courses={ongoingCourses} title="Active Courses" allCourses={MOCK_COURSES} />
+          <CoursesGrid courses={ongoingCourses} title="Active Courses" allCourses={allCourses} />
           <CoursesGrid
             courses={recommendedCourses}
             title="Recommended for You"
             showRecommendationScore
-            allCourses={MOCK_COURSES}
+            allCourses={allCourses}
           />
         </MotionStack>
       </Container>

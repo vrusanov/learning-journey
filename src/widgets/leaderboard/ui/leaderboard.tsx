@@ -202,39 +202,41 @@ export function Leaderboard({ users }: LeaderboardProps) {
         </AnimatePresence>
       </Stack>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-        <Card padding="md" radius="lg" withBorder className={classes.summaryCard}>
-          <Group justify="space-around">
-            <Stack gap={4} align="center">
-              <IconTarget size={20} className={classes.targetIcon} />
-              <Text size="xs" c="dimmed">
-                Avg Completed
-              </Text>
-              <Text size="lg" fw={700}>
-                {Math.round(users.reduce((sum, u) => sum + u.stats.completed, 0) / users.length)}
-              </Text>
-            </Stack>
-            <Stack gap={4} align="center">
-              <IconStar size={20} className={classes.starIcon} />
-              <Text size="xs" c="dimmed">
-                Avg Accuracy
-              </Text>
-              <Text size="lg" fw={700}>
-                {Math.round(users.reduce((sum, u) => sum + u.stats.avgAccuracy, 0) / users.length)}%
-              </Text>
-            </Stack>
-            <Stack gap={4} align="center">
-              <IconClock size={20} className={classes.clockIcon} />
-              <Text size="xs" c="dimmed">
-                Total Hours
-              </Text>
-              <Text size="lg" fw={700}>
-                {Math.floor(users.reduce((sum, u) => sum + u.stats.totalMinutes, 0) / 60)}h
-              </Text>
-            </Stack>
-          </Group>
-        </Card>
-      </motion.div>
+      {users.length > 0 && (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+          <Card padding="md" radius="lg" withBorder className={classes.summaryCard}>
+            <Group justify="space-around">
+              <Stack gap={4} align="center">
+                <IconTarget size={20} className={classes.targetIcon} />
+                <Text size="xs" c="dimmed">
+                  Avg Completed
+                </Text>
+                <Text size="lg" fw={700}>
+                  {Math.round(users.reduce((sum, u) => sum + u.stats.completed, 0) / users.length)}
+                </Text>
+              </Stack>
+              <Stack gap={4} align="center">
+                <IconStar size={20} className={classes.starIcon} />
+                <Text size="xs" c="dimmed">
+                  Avg Accuracy
+                </Text>
+                <Text size="lg" fw={700}>
+                  {Math.round(users.reduce((sum, u) => sum + u.stats.avgAccuracy, 0) / users.length)}%
+                </Text>
+              </Stack>
+              <Stack gap={4} align="center">
+                <IconClock size={20} className={classes.clockIcon} />
+                <Text size="xs" c="dimmed">
+                  Total Hours
+                </Text>
+                <Text size="lg" fw={700}>
+                  {Math.floor(users.reduce((sum, u) => sum + u.stats.totalMinutes, 0) / 60)}h
+                </Text>
+              </Stack>
+            </Group>
+          </Card>
+        </motion.div>
+      )}
     </Stack>
   )
 }

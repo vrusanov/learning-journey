@@ -39,8 +39,8 @@ type MotionStackProps = StackProps &
     children?: ReactNode
   }
 
-const MotionCardBase = motion(Card as React.ComponentType<CardProps>)
-const MotionPaperBase = motion(Paper as React.ComponentType<PaperProps>)
+const MotionCardBase = motion.create(Card as React.ComponentType<CardProps>)
+const MotionPaperBase = motion.create(Paper as React.ComponentType<PaperProps>)
 
 export const MotionCard = forwardRef<HTMLDivElement, MotionCardProps>((props, ref) => {
   return <MotionCardBase ref={ref} {...(props as CardProps & HTMLMotionProps<"div">)} className={classes.clickable} />
@@ -54,8 +54,12 @@ export const MotionPaper = forwardRef<HTMLDivElement, MotionPaperProps>((props, 
 
 MotionPaper.displayName = "MotionPaper"
 
-export const MotionBadge = motion(Badge as React.ComponentType<BadgeProps>) as React.ComponentType<MotionBadgeProps>
+export const MotionBadge = motion.create(
+  Badge as React.ComponentType<BadgeProps>
+) as React.ComponentType<MotionBadgeProps>
 
-export const MotionBox = motion(Box as React.ComponentType<BoxProps>) as React.ComponentType<MotionBoxProps>
+export const MotionBox = motion.create(Box as React.ComponentType<BoxProps>) as React.ComponentType<MotionBoxProps>
 
-export const MotionStack = motion(Stack as React.ComponentType<StackProps>) as React.ComponentType<MotionStackProps>
+export const MotionStack = motion.create(
+  Stack as React.ComponentType<StackProps>
+) as React.ComponentType<MotionStackProps>

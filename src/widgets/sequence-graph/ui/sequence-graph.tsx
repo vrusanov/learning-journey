@@ -31,7 +31,7 @@ export function SequenceGraph({ courses }: SequenceGraphProps) {
     const visited = new Set<string>()
     const result: Course[][] = []
 
-    const startCourses = completed.filter((c) => c.prereqIds.length === 0)
+      const startCourses = completed.filter((c) => c.prereqIds.length === 0)
     if (startCourses.length > 0) {
       result.push(startCourses)
       startCourses.forEach((c) => visited.add(c.id))

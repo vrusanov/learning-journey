@@ -17,9 +17,7 @@ export function DashboardStatsQuery() {
   const [progress, setProgress] = useState(0)
 
   // Calculate progress percentage
-  const progressPercent = stats
-    ? Math.round((stats.completedCourses / stats.totalCourses) * 100)
-    : 0
+  const progressPercent = stats ? Math.round((stats.completedCourses / stats.totalCourses) * 100) : 0
 
   const displayCompleted = useCounterAnimation(stats?.completedCourses || 0, 500)
   const displayOngoing = useCounterAnimation(stats?.ongoingCourses || 0, 600)
@@ -107,11 +105,7 @@ export function DashboardStatsQuery() {
             <div className={classes.iconContainer}>
               <IconBook size={24} className={classes.bookIcon} />
             </div>
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring" }}
-            >
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.3, type: "spring" }}>
               <Text size="xl" fw={700}>
                 {displayCompleted}
               </Text>
@@ -140,11 +134,7 @@ export function DashboardStatsQuery() {
             <div className={classes.iconContainer}>
               <IconClock size={24} className={classes.clockIcon} />
             </div>
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.4, type: "spring" }}
-            >
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.4, type: "spring" }}>
               <Text size="xl" fw={700}>
                 {displayOngoing}
               </Text>
@@ -173,11 +163,7 @@ export function DashboardStatsQuery() {
             <div className={classes.iconContainer}>
               <IconTrendingUp size={24} className={classes.trendingIcon} />
             </div>
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, type: "spring" }}
-            >
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5, type: "spring" }}>
               <Text size="xl" fw={700}>
                 {displayRecommended}
               </Text>
@@ -225,4 +211,3 @@ export function DashboardStatsQuery() {
     </Grid>
   )
 }
-

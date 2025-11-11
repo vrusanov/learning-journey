@@ -55,4 +55,3 @@ export function CoursesGridQuery({ filters, title, showRecommendationScore }: Co
     />
   )
 }
-

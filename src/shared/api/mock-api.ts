@@ -1,28 +1,19 @@
-/**
- * Mock API to simulate backend requests
- * Simulates network delays and realistic API responses
- */
-
 import { Course } from "../types/course"
 import { User } from "../types/user"
 import { MOCK_COURSES } from "../../entities/course/model/mock-courses"
 import { MOCK_USERS } from "../../entities/user/model/mock-users"
 
-// Create mutable copies for mock API
-let mockCourses = [...MOCK_COURSES]
-let mockUsers = [...MOCK_USERS]
+const mockCourses = [...MOCK_COURSES]
+const mockUsers = [...MOCK_USERS]
 
-// Simulate network delay
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-// Simulate random failures (5% chance)
 const shouldFail = () => Math.random() < 0.05
 
-// API Error class
 export class ApiError extends Error {
   constructor(
     message: string,
-    public status: number,
+    public status: number
   ) {
     super(message)
     this.name = "ApiError"
@@ -56,7 +47,6 @@ export const fetchCourses = async (params?: FetchCoursesParams): Promise<FetchCo
 
   let filtered = [...mockCourses]
 
-  // Apply filters
   if (params?.status) {
     filtered = filtered.filter((c: Course) => c.status === params.status)
   }
@@ -68,8 +58,7 @@ export const fetchCourses = async (params?: FetchCoursesParams): Promise<FetchCo
   if (params?.search) {
     const searchLower = params.search.toLowerCase()
     filtered = filtered.filter(
-      (c: Course) =>
-        c.title.toLowerCase().includes(searchLower) || c.description.toLowerCase().includes(searchLower),
+      (c: Course) => c.title.toLowerCase().includes(searchLower) || c.description.toLowerCase().includes(searchLower)
     )
   }
 
@@ -101,10 +90,7 @@ export const fetchCourseById = async (id: string): Promise<Course> => {
 /**
  * Update course status
  */
-export const updateCourseStatus = async (
-  id: string,
-  status: Course["status"],
-): Promise<Course> => {
+export const updateCourseStatus = async (id: string, status: Course["status"]): Promise<Course> => {
   await delay(400)
 
   if (shouldFail()) {
@@ -116,8 +102,6 @@ export const updateCourseStatus = async (
   if (!course) {
     throw new ApiError("Course not found", 404)
   }
-
-  // Update the course (in real app, this would be persisted)
   course.status = status
 
   return course
@@ -141,9 +125,7 @@ export interface FetchLeaderboardResponse {
 /**
  * Fetch leaderboard with pagination
  */
-export const fetchLeaderboard = async (
-  params?: FetchLeaderboardParams,
-): Promise<FetchLeaderboardResponse> => {
+export const fetchLeaderboard = async (params?: FetchLeaderboardParams): Promise<FetchLeaderboardResponse> => {
   await delay(600)
 
   if (shouldFail()) {
@@ -152,8 +134,6 @@ export const fetchLeaderboard = async (
 
   const limit = params?.limit || 10
   const offset = params?.offset || 0
-
-  // Sort by XP descending
   const sorted = [...mockUsers].sort((a, b) => b.stats.xp - a.stats.xp)
 
   const users = sorted.slice(offset, offset + limit)
@@ -185,7 +165,7 @@ export const fetchCurrentUser = async (): Promise<User> => {
  */
 export const updateUserProfile = async (
   userId: string,
-  updates: Partial<Pick<User, "name" | "avatar">>,
+  updates: Partial<Pick<User, "name" | "avatar">>
 ): Promise<User> => {
   await delay(500)
 
@@ -198,8 +178,6 @@ export const updateUserProfile = async (
   if (!user) {
     throw new ApiError("User not found", 404)
   }
-
-  // Update user (in real app, this would be persisted)
   Object.assign(user, updates)
 
   return user
@@ -245,4 +223,3 @@ export const fetchDashboardStats = async (): Promise<DashboardStats> => {
 
   return stats
 }
-

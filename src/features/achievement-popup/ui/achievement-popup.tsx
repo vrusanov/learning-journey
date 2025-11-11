@@ -20,7 +20,10 @@ interface AchievementPopupProps {
   onClose: () => void
 }
 
-const iconMap: Record<string, React.ForwardRefExoticComponent<React.PropsWithoutRef<React.ComponentProps<Icon>> & React.RefAttributes<Icon>>> = {
+const iconMap: Record<
+  string,
+  React.ForwardRefExoticComponent<React.PropsWithoutRef<React.ComponentProps<Icon>> & React.RefAttributes<Icon>>
+> = {
   trophy: IconTrophy,
   flame: IconFlame,
   target: IconTarget,
@@ -63,7 +66,6 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
       }}
     >
       <Stack align="center" gap="lg">
-        {/* Animated Icon */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -82,13 +84,7 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
             <IconComponent size={80} stroke={1.5} style={{ color: "white" }} />
           </motion.div>
         </motion.div>
-
-        {/* Rarity Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           <Badge
             size="lg"
             variant="gradient"
@@ -98,30 +94,16 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
             {achievement.rarity}
           </Badge>
         </motion.div>
-
-        {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
           <Text size="xl" fw={700} c="white" ta="center">
             {achievement.title}
           </Text>
         </motion.div>
-
-        {/* Description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
           <Text size="sm" c="white" ta="center" opacity={0.9}>
             {achievement.description}
           </Text>
         </motion.div>
-
-        {/* Confetti Effect */}
         {Array.from({ length: 20 }).map((_, i) => (
           <motion.div
             key={i}
@@ -147,13 +129,7 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
             style={{ pointerEvents: "none" }}
           />
         ))}
-
-        {/* Close Button */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
           <Button variant="white" color="dark" onClick={onClose} size="md" fullWidth>
             Awesome!
           </Button>
@@ -162,4 +138,3 @@ export function AchievementPopup({ achievement, opened, onClose }: AchievementPo
     </Modal>
   )
 }
-

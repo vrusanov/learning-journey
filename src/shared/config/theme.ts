@@ -5,4 +5,3 @@ export const theme = createTheme({
   defaultRadius: "md",
   fontFamily: "system-ui, -apple-system, sans-serif",
 })
-

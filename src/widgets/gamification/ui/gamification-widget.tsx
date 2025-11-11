@@ -321,43 +321,43 @@ export function GamificationWidget() {
                       >
                         {iconMap[achievement.icon]}
                       </motion.div>
-                    <Stack gap="xs" className={classes.achievementContent}>
-                      <Group justify="space-between">
-                        <Text fw={600} size="sm">
-                          {achievement.title}
+                      <Stack gap="xs" className={classes.achievementContent}>
+                        <Group justify="space-between">
+                          <Text fw={600} size="sm">
+                            {achievement.title}
+                          </Text>
+                          {achievement.unlocked && (
+                            <motion.div
+                              initial={{ scale: 0, rotate: -180 }}
+                              animate={{ scale: 1, rotate: 0 }}
+                              transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                            >
+                              <Badge size="xs" color={ACHIEVEMENT_RARITIES[achievement.rarity].color} variant="light">
+                                {ACHIEVEMENT_RARITIES[achievement.rarity].label}
+                              </Badge>
+                            </motion.div>
+                          )}
+                        </Group>
+                        <Text size="xs" c="dimmed">
+                          {achievement.description}
                         </Text>
-                        {achievement.unlocked && (
+                        {!achievement.unlocked && (
                           <motion.div
-                            initial={{ scale: 0, rotate: -180 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                            initial={{ scaleX: 0, originX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.8, delay: 0.7 + index * 0.1 }}
                           >
-                            <Badge size="xs" color={ACHIEVEMENT_RARITIES[achievement.rarity].color} variant="light">
-                              {ACHIEVEMENT_RARITIES[achievement.rarity].label}
-                            </Badge>
+                            <Progress
+                              value={achievement.progress}
+                              size="xs"
+                              radius="xl"
+                              color={ACHIEVEMENT_RARITIES[achievement.rarity].color}
+                            />
                           </motion.div>
                         )}
-                      </Group>
-                      <Text size="xs" c="dimmed">
-                        {achievement.description}
-                      </Text>
-                      {!achievement.unlocked && (
-                        <motion.div
-                          initial={{ scaleX: 0, originX: 0 }}
-                          animate={{ scaleX: 1 }}
-                          transition={{ duration: 0.8, delay: 0.7 + index * 0.1 }}
-                        >
-                          <Progress
-                            value={achievement.progress}
-                            size="xs"
-                            radius="xl"
-                            color={ACHIEVEMENT_RARITIES[achievement.rarity].color}
-                          />
-                        </motion.div>
-                      )}
-                    </Stack>
-                  </Group>
-                </MotionCard>
+                      </Stack>
+                    </Group>
+                  </MotionCard>
                 </Indicator>
               </Grid.Col>
             ))}

@@ -256,7 +256,7 @@ export const MOCK_COURSES: Course[] = [
     totalProgress: 0,
   },
 
-    {
+  {
     id: "do-1",
     title: "Git & Version Control",
     category: "DevOps",
@@ -371,7 +371,7 @@ export const MOCK_COURSES: Course[] = [
     totalProgress: 0,
   },
 
-    {
+  {
     id: "ds-1",
     title: "Python Programming",
     category: "Data Science",

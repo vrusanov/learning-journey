@@ -1,17 +1,7 @@
-/**
- * React Query hooks for users API
- */
-
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query"
-import {
-  fetchLeaderboard,
-  fetchCurrentUser,
-  updateUserProfile,
-  FetchLeaderboardParams,
-} from "../mock-api"
+import { fetchLeaderboard, fetchCurrentUser, updateUserProfile, FetchLeaderboardParams } from "../mock-api"
 import { User } from "../../types/user"
 
-// Query keys
 export const userKeys = {
   all: ["users"] as const,
   current: () => [...userKeys.all, "current"] as const,
@@ -19,9 +9,6 @@ export const userKeys = {
   leaderboardList: (params?: FetchLeaderboardParams) => [...userKeys.leaderboard(), params] as const,
 }
 
-/**
- * Hook to fetch current user
- */
 export const useCurrentUser = () => {
   return useQuery({
     queryKey: userKeys.current(),
@@ -30,9 +17,6 @@ export const useCurrentUser = () => {
   })
 }
 
-/**
- * Hook to fetch leaderboard with pagination
- */
 export const useLeaderboard = (params?: FetchLeaderboardParams) => {
   return useQuery({
     queryKey: userKeys.leaderboardList(params),
@@ -41,9 +25,6 @@ export const useLeaderboard = (params?: FetchLeaderboardParams) => {
   })
 }
 
-/**
- * Hook to fetch leaderboard with infinite scroll
- */
 export const useInfiniteLeaderboard = (limit: number = 10) => {
   return useInfiniteQuery({
     queryKey: [...userKeys.leaderboard(), "infinite", limit],
@@ -61,9 +42,6 @@ export const useInfiniteLeaderboard = (limit: number = 10) => {
   })
 }
 
-/**
- * Hook to update user profile
- */
 export const useUpdateUserProfile = () => {
   const queryClient = useQueryClient()
 
@@ -71,7 +49,6 @@ export const useUpdateUserProfile = () => {
     mutationFn: ({ userId, updates }: { userId: string; updates: Partial<Pick<User, "name" | "avatar">> }) =>
       updateUserProfile(userId, updates),
 
-    // Optimistic update
     onMutate: async ({ updates }) => {
       await queryClient.cancelQueries({ queryKey: userKeys.current() })
 
@@ -97,4 +74,3 @@ export const useUpdateUserProfile = () => {
     },
   })
 }
-

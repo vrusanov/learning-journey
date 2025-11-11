@@ -1,16 +1,4 @@
-import {
-  Modal,
-  Stack,
-  Text,
-  Badge,
-  Group,
-  Progress,
-  Button,
-  Grid,
-  Timeline,
-  Divider,
-  ThemeIcon,
-} from "@mantine/core"
+import { Modal, Stack, Text, Badge, Group, Progress, Button, Grid, Timeline, Divider, ThemeIcon } from "@mantine/core"
 import {
   IconClock,
   IconTarget,
@@ -94,8 +82,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
           </Text>
           <Text c="dimmed">{course.description}</Text>
         </motion.div>
-
-        {/* Progress Section (for ongoing and completed) */}
         {course.status !== "recommended" && (
           <MotionCard
             withBorder
@@ -116,8 +102,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
             </Stack>
           </MotionCard>
         )}
-
-        {/* Stats Grid */}
         <Grid gutter="md">
           <Grid.Col span={6}>
             <MotionCard
@@ -219,8 +203,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
             </MotionCard>
           </Grid.Col>
         </Grid>
-
-        {/* Recommendation Score for recommended courses */}
         {course.status === "recommended" && course.recommendedScore && (
           <MotionCard
             withBorder
@@ -279,8 +261,6 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
             </Timeline>
           </motion.div>
         )}
-
-        {/* Action Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -292,4 +272,3 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
     </Modal>
   )
 }
-

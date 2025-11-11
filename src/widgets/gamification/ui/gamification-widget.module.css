@@ -39,11 +39,13 @@
 .achievementCardUnlocked {
   opacity: 1;
   background: linear-gradient(135deg, rgba(114, 87, 255, 0.1) 0%, rgba(162, 140, 255, 0.05) 100%);
+  cursor: pointer;
 }
 
 .achievementCardLocked {
   opacity: 0.6;
   background: transparent;
+  cursor: pointer;
 }
 
 .achievementIconContainer {

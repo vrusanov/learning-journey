@@ -297,7 +297,6 @@ export function GamificationWidget() {
                     }
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAchievementClick(achievement)}
-                    style={{ cursor: "pointer" }}
                   >
                     <Group align="flex-start" gap="md">
                       <motion.div

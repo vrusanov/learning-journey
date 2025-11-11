@@ -1,6 +1,7 @@
-import { MantineProvider, createTheme, Container, Title, Text } from "@mantine/core"
+import { MantineProvider, createTheme, Container } from "@mantine/core"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
+import { Header } from "@/widgets/header"
 import { GamificationWidget } from "@/widgets/gamification"
 import { CoursesGrid } from "@/widgets/courses-grid"
 import { DashboardStats } from "@/widgets/dashboard"
@@ -64,19 +65,12 @@ export function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <Title order={1} size="h1" fw={900} ta="center" mt="xl">
-            Learning Journey Dashboard
-          </Title>
-          <Text size="lg" c="dimmed" ta="center" mb="xl">
-            Track your progress and discover new courses
-          </Text>
+          <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
           <DashboardStats stats={stats} />
           <GamificationWidget />
           <Leaderboard users={MOCK_USERS} />
           <FiltersBar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
             selectedCategories={selectedCategories}
             onCategoriesChange={setSelectedCategories}
             selectedStatuses={selectedStatuses}

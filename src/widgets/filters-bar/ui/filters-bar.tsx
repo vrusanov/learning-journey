@@ -1,5 +1,5 @@
-import { TextInput, MultiSelect, Group, Box } from "@mantine/core"
-import { IconSearch, IconCalendar } from "@tabler/icons-react"
+import { MultiSelect, Group, Box } from "@mantine/core"
+import { IconCalendar } from "@tabler/icons-react"
 import { DatePickerInput } from "@mantine/dates"
 import { motion } from "framer-motion"
 import { MotionPaper } from "@/shared/ui"
@@ -7,8 +7,6 @@ import { CATEGORIES, COURSE_STATUSES } from "@/shared/config"
 import classes from "./filters-bar.module.css"
 
 interface FiltersBarProps {
-  searchQuery: string
-  onSearchChange: (value: string) => void
   selectedCategories: string[]
   onCategoriesChange: (value: string[]) => void
   selectedStatuses: string[]
@@ -18,8 +16,6 @@ interface FiltersBarProps {
 }
 
 export function FiltersBar({
-  searchQuery,
-  onSearchChange,
   selectedCategories,
   onCategoriesChange,
   selectedStatuses,
@@ -37,18 +33,6 @@ export function FiltersBar({
       transition={{ duration: 0.4, delay: 0.2 }}
     >
       <Group gap="md" grow>
-        <TextInput
-          placeholder="Search courses..."
-          leftSection={<IconSearch size={18} />}
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.currentTarget.value)}
-          styles={{
-            input: {
-              background: "rgba(255, 255, 255, 0.05)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-            },
-          }}
-        />
         <MultiSelect
           placeholder="Categories"
           data={[...CATEGORIES]}

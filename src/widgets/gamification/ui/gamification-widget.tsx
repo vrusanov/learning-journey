@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react"
-import { Group, Stack, Text, Progress, Badge, Grid } from "@mantine/core"
+import { useEffect, useRef, useState } from "react"
+import { Group, Stack, Text, Progress, Badge, Grid, Indicator, Switch } from "@mantine/core"
 import { motion } from "framer-motion"
 import {
   IconFlame,
@@ -8,11 +8,13 @@ import {
   IconTarget,
   IconSparkles,
   IconMedal,
-  IconCrown,
   IconBolt,
+  IconBell,
+  IconBellOff,
 } from "@tabler/icons-react"
 import { MotionCard, MotionBox, MotionBadge } from "@/shared/ui"
 import { ACHIEVEMENT_RARITIES } from "@/shared/config"
+import { AchievementPopup } from "@/features/achievement-popup"
 import classes from "./gamification-widget.module.css"
 
 const ACHIEVEMENTS = [
@@ -20,7 +22,7 @@ const ACHIEVEMENTS = [
     id: "1",
     title: "First Steps",
     description: "Complete your first course",
-    icon: <IconStar size={24} />,
+    icon: "star",
     unlocked: true,
     progress: 100,
     rarity: "common" as const,
@@ -29,16 +31,17 @@ const ACHIEVEMENTS = [
     id: "2",
     title: "Speed Demon",
     description: "Finish a course 2x faster",
-    icon: <IconBolt size={24} />,
+    icon: "zap",
     unlocked: true,
     progress: 100,
     rarity: "rare" as const,
+    isNew: true,
   },
   {
     id: "3",
     title: "Perfectionist",
     description: "Achieve 95% accuracy",
-    icon: <IconTrophy size={24} />,
+    icon: "trophy",
     unlocked: false,
     progress: 92,
     rarity: "epic" as const,
@@ -47,17 +50,36 @@ const ACHIEVEMENTS = [
     id: "4",
     title: "Master",
     description: "Complete 10 courses",
-    icon: <IconCrown size={24} />,
+    icon: "trophy",
     unlocked: false,
     progress: 20,
     rarity: "legendary" as const,
   },
 ]
 
+const iconMap: Record<string, React.ReactNode> = {
+  star: <IconStar size={24} />,
+  zap: <IconBolt size={24} />,
+  trophy: <IconTrophy size={24} />,
+}
+
 export function GamificationWidget() {
   const streakRef = useRef<HTMLDivElement>(null)
   const xpRef = useRef<HTMLDivElement>(null)
   const levelRef = useRef<HTMLDivElement>(null)
+
+  const [selectedAchievement, setSelectedAchievement] = useState<(typeof ACHIEVEMENTS)[0] | null>(null)
+  const [popupOpened, setPopupOpened] = useState(false)
+  const [newBadgeVisible, setNewBadgeVisible] = useState(true)
+  const [reminderEnabled, setReminderEnabled] = useState(false)
+
+  const handleAchievementClick = (achievement: (typeof ACHIEVEMENTS)[0]) => {
+    setSelectedAchievement(achievement)
+    setPopupOpened(true)
+    if (achievement.isNew) {
+      setNewBadgeVisible(false)
+    }
+  }
 
   useEffect(() => {
     // Animate counters
@@ -246,47 +268,59 @@ export function GamificationWidget() {
           <Grid gutter="md">
             {ACHIEVEMENTS.map((achievement, index) => (
               <Grid.Col span={{ base: 12, sm: 6 }} key={achievement.id}>
-                <MotionCard
-                  shadow="sm"
-                  padding="md"
-                  radius="lg"
+                <Indicator
+                  inline
+                  label="NEW"
+                  size={16}
+                  color="red"
+                  disabled={!achievement.isNew || !newBadgeVisible}
+                  position="top-end"
+                  offset={7}
                   withBorder
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                  className={achievement.unlocked ? classes.achievementCardUnlocked : classes.achievementCardLocked}
-                  whileHover={
-                    achievement.unlocked
-                      ? {
-                          scale: 1.05,
-                          y: -4,
-                          boxShadow: "0 10px 30px rgba(114, 87, 255, 0.3)",
-                        }
-                      : { scale: 1.02 }
-                  }
-                  whileTap={{ scale: 0.98 }}
                 >
-                  <Group align="flex-start" gap="md">
-                    <motion.div
-                      className={`${classes.achievementIconContainer} ${
-                        achievement.unlocked ? classes.achievementIconUnlocked : classes.achievementIconLocked
-                      }`}
-                      animate={
-                        achievement.unlocked
-                          ? {
-                              scale: [1, 1.1, 1],
-                              rotate: [0, 5, -5, 0],
-                            }
-                          : {}
-                      }
-                      transition={{
-                        duration: 2,
-                        repeat: achievement.unlocked ? Number.POSITIVE_INFINITY : 0,
-                        repeatDelay: 3,
-                      }}
-                    >
-                      {achievement.icon}
-                    </motion.div>
+                  <MotionCard
+                    shadow="sm"
+                    padding="md"
+                    radius="lg"
+                    withBorder
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
+                    className={achievement.unlocked ? classes.achievementCardUnlocked : classes.achievementCardLocked}
+                    whileHover={
+                      achievement.unlocked
+                        ? {
+                            scale: 1.05,
+                            y: -4,
+                            boxShadow: "0 10px 30px rgba(114, 87, 255, 0.3)",
+                          }
+                        : { scale: 1.02 }
+                    }
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleAchievementClick(achievement)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Group align="flex-start" gap="md">
+                      <motion.div
+                        className={`${classes.achievementIconContainer} ${
+                          achievement.unlocked ? classes.achievementIconUnlocked : classes.achievementIconLocked
+                        }`}
+                        animate={
+                          achievement.unlocked
+                            ? {
+                                scale: [1, 1.1, 1],
+                                rotate: [0, 5, -5, 0],
+                              }
+                            : {}
+                        }
+                        transition={{
+                          duration: 2,
+                          repeat: achievement.unlocked ? Number.POSITIVE_INFINITY : 0,
+                          repeatDelay: 3,
+                        }}
+                      >
+                        {iconMap[achievement.icon]}
+                      </motion.div>
                     <Stack gap="xs" className={classes.achievementContent}>
                       <Group justify="space-between">
                         <Text fw={600} size="sm">
@@ -324,6 +358,7 @@ export function GamificationWidget() {
                     </Stack>
                   </Group>
                 </MotionCard>
+                </Indicator>
               </Grid.Col>
             ))}
           </Grid>
@@ -384,6 +419,56 @@ export function GamificationWidget() {
           <Progress value={78} size="lg" radius="xl" color="cyan.6" mt="md" />
         </motion.div>
       </MotionCard>
+
+      {/* Lesson Reminders Toggle */}
+      <MotionCard
+        shadow="md"
+        padding="lg"
+        radius="xl"
+        withBorder
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.9 }}
+        whileHover={{ scale: 1.02, y: -3 }}
+      >
+        <Group justify="space-between" align="center">
+          <Group gap="md">
+            <motion.div
+              animate={
+                reminderEnabled
+                  ? {
+                      scale: [1, 1.2, 1],
+                      rotate: [0, -15, 15, 0],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 0.5,
+              }}
+            >
+              {reminderEnabled ? <IconBell size={32} /> : <IconBellOff size={32} />}
+            </motion.div>
+            <Stack gap={4}>
+              <Text fw={600} size="lg">
+                Lesson Reminders
+              </Text>
+              <Text size="sm" c="dimmed">
+                {reminderEnabled ? "You'll receive daily reminders" : "Enable to get daily study reminders"}
+              </Text>
+            </Stack>
+          </Group>
+          <Switch
+            size="lg"
+            checked={reminderEnabled}
+            onChange={(event) => setReminderEnabled(event.currentTarget.checked)}
+            color="violet"
+            thumbIcon={reminderEnabled ? <IconBell size={12} /> : <IconBellOff size={12} />}
+          />
+        </Group>
+      </MotionCard>
+
+      {/* Achievement Popup */}
+      <AchievementPopup achievement={selectedAchievement} opened={popupOpened} onClose={() => setPopupOpened(false)} />
     </Stack>
   )
 }

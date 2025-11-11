@@ -1,13 +1,13 @@
-import { MantineProvider, createTheme, Container, Title, Text } from "@mantine/core"
+import { MantineProvider, createTheme, Container } from "@mantine/core"
 import "@mantine/core/styles.css"
 import "@mantine/dates/styles.css"
+import { Header } from "@/widgets/header"
 import { GamificationWidget } from "@/widgets/gamification"
 import { CoursesGrid } from "@/widgets/courses-grid"
 import { DashboardStats } from "@/widgets/dashboard"
 import { SequenceGraph } from "@/widgets/sequence-graph"
 import { FiltersBar } from "@/widgets/filters-bar"
 import { Leaderboard } from "@/widgets/leaderboard"
-import { motion } from "framer-motion"
 import { MOCK_COURSES } from "@/entities/course"
 import { MOCK_USERS } from "@/entities/user"
 import { useState, useMemo } from "react"
@@ -65,18 +65,7 @@ export function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <Title order={1} mb="xs" className={classes.title}>
-              Learning Journey
-            </Title>
-            <Text c="dimmed" className={classes.subtitle}>
-              {stats.completed} completed · {stats.ongoing} in progress · {recommendedCourses.length} recommended
-            </Text>
-          </motion.div>
+          <Header />
 
           <DashboardStats stats={stats} />
           <GamificationWidget />

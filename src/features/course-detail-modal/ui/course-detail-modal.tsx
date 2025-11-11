@@ -32,6 +32,37 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
   const totalHours = Math.floor(totalMinutes / 60)
   const remainingMinutes = totalMinutes % 60
 
+  // Calculate roadmap item completion based on course dates and progress
+  const getRoadmapItemStatus = (itemIndex: number, totalItems: number) => {
+    const now = Date.now()
+
+    // If course hasn't started yet (recommended or no start date)
+    if (!course.startDate || course.status === "recommended") {
+      return false
+    }
+
+    // If course is completed (all items should be completed)
+    if (course.status === "completed" || (course.endDate && now > course.endDate)) {
+      return true
+    }
+
+    // If course is ongoing, calculate based on progress
+    if (course.status === "ongoing" && course.startDate && course.endDate) {
+      const courseDuration = course.endDate - course.startDate
+      const timeElapsed = now - course.startDate
+      const progressByTime = Math.min((timeElapsed / courseDuration) * 100, 100)
+
+      // Use the higher of actual progress or time-based progress
+      const effectiveProgress = Math.max(course.totalProgress, progressByTime)
+
+      // Calculate which items should be completed based on progress
+      const itemProgressThreshold = ((itemIndex + 1) / totalItems) * 100
+      return effectiveProgress >= itemProgressThreshold
+    }
+
+    return false
+  }
+
   const getActionButton = () => {
     switch (course.status) {
       case "ongoing":
@@ -261,10 +292,55 @@ export function CourseDetailModal({ course, opened, onClose }: CourseDetailModal
             </Timeline>
           </motion.div>
         )}
+
+        {/* Course Roadmap */}
+        {course.roadmap && course.roadmap.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.6 }}
+          >
+            <Divider my="md" />
+            <Text fw={600} mb="md">
+              Course Roadmap
+            </Text>
+            <Timeline
+              active={course.roadmap.findIndex((_, idx) => !getRoadmapItemStatus(idx, course.roadmap!.length))}
+              bulletSize={24}
+              lineWidth={2}
+              color="violet"
+            >
+              {course.roadmap.map((item, index) => {
+                const isCompleted = getRoadmapItemStatus(index, course.roadmap!.length)
+                return (
+                  <Timeline.Item
+                    key={item.id}
+                    bullet={isCompleted ? <IconCheck size={12} /> : <IconBook size={12} />}
+                    title={
+                      <Group gap="xs">
+                        <Text size="sm" fw={500} c={isCompleted ? "dimmed" : undefined}>
+                          {item.title}
+                        </Text>
+                        <Badge size="sm" variant="light" color={isCompleted ? "green" : "gray"}>
+                          {item.estimatedHours}h
+                        </Badge>
+                      </Group>
+                    }
+                  >
+                    <Text size="xs" c="dimmed">
+                      {item.description}
+                    </Text>
+                  </Timeline.Item>
+                )
+              })}
+            </Timeline>
+          </motion.div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.6 }}
+          transition={{ duration: 0.4, delay: 0.7 }}
         >
           {getActionButton()}
         </motion.div>

@@ -16,6 +16,14 @@ export interface PerformanceMetrics {
   totalTasksAttempted: number
 }
 
+export interface RoadmapItem {
+  id: string
+  title: string
+  description: string
+  estimatedHours: number
+  order: number
+}
+
 export interface Course {
   id: string
   title: string
@@ -29,4 +37,7 @@ export interface Course {
   unlockedCourseIds?: string[]
   description: string
   totalProgress: number
+  roadmap?: RoadmapItem[]
+  startDate?: number
+  endDate?: number
 }

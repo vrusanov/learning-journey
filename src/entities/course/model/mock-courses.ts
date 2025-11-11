@@ -1,4 +1,4 @@
-import type { Course } from "@/shared/types"
+import type { Course, RoadmapItem } from "@/shared/types"
 
 const generateSessions = (count: number, status: "completed" | "ongoing" | "recommended") => {
   if (status === "recommended") return []
@@ -26,6 +26,50 @@ const generateSessions = (count: number, status: "completed" | "ongoing" | "reco
   return sessions
 }
 
+const generateRoadmap = (courseId: string, itemCount: number): RoadmapItem[] => {
+  const roadmapTemplates: Record<string, string[]> = {
+    default: ["Introduction", "Core Concepts", "Practical Examples", "Advanced Topics", "Final Project"],
+  }
+
+  const templates = roadmapTemplates.default
+  const items: RoadmapItem[] = []
+
+  for (let i = 0; i < Math.min(itemCount, templates.length); i++) {
+    items.push({
+      id: `${courseId}-roadmap-${i}`,
+      title: templates[i],
+      description: `Learn ${templates[i].toLowerCase()} in this module`,
+      estimatedHours: Math.floor(Math.random() * 5) + 2,
+      order: i,
+    })
+  }
+
+  return items
+}
+
+const generateCourseDates = (status: "completed" | "ongoing" | "recommended", sessionCount: number) => {
+  const now = Date.now()
+  const dayInMs = 24 * 60 * 60 * 1000
+
+  if (status === "recommended") {
+    return { startDate: undefined, endDate: undefined }
+  }
+
+  if (status === "completed") {
+    const endDate = now - dayInMs * 5
+    const startDate = endDate - sessionCount * dayInMs * 2
+    return { startDate, endDate }
+  }
+
+  if (status === "ongoing") {
+    const startDate = now - sessionCount * dayInMs * 2
+    const endDate = now + sessionCount * dayInMs * 1.5
+    return { startDate, endDate }
+  }
+
+  return { startDate: undefined, endDate: undefined }
+}
+
 export const MOCK_COURSES: Course[] = [
   {
     id: "fe-1",
@@ -37,6 +81,8 @@ export const MOCK_COURSES: Course[] = [
     prereqIds: [],
     description: "Master the basics of web development",
     totalProgress: 100,
+    roadmap: generateRoadmap("fe-1", 5),
+    ...generateCourseDates("completed", 8),
   },
   {
     id: "fe-2",
@@ -48,6 +94,8 @@ export const MOCK_COURSES: Course[] = [
     prereqIds: ["fe-1"],
     description: "Modern JavaScript features and patterns",
     totalProgress: 100,
+    roadmap: generateRoadmap("fe-2", 5),
+    ...generateCourseDates("completed", 12),
   },
   {
     id: "fe-3",
@@ -59,6 +107,8 @@ export const MOCK_COURSES: Course[] = [
     prereqIds: ["fe-2"],
     description: "Build modern UIs with React",
     totalProgress: 100,
+    roadmap: generateRoadmap("fe-3", 5),
+    ...generateCourseDates("completed", 10),
   },
   {
     id: "fe-4",
@@ -70,6 +120,8 @@ export const MOCK_COURSES: Course[] = [
     prereqIds: ["fe-3"],
     description: "Hooks, Context, and advanced patterns",
     totalProgress: 65,
+    roadmap: generateRoadmap("fe-4", 5),
+    ...generateCourseDates("ongoing", 6),
   },
   {
     id: "fe-5",
